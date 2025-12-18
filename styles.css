@@ -1,21 +1,23 @@
 :root {
-  --bg: #0f1629;
-  --card: rgba(255, 255, 255, 0.04);
+  --bg: #0f1424;
+  --card: rgba(255, 255, 255, 0.05);
   --text: #e8ecf5;
   --muted: #9da8c2;
-  --border: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.12);
   --accent: #7c3aed;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  --classic: rgba(255, 255, 255, 0.08);
   color-scheme: dark;
 }
 
 :root[data-theme='light'] {
-  --bg: #f5f7fb;
-  --card: rgba(255, 255, 255, 0.75);
+  --bg: #f4f5fb;
+  --card: rgba(255, 255, 255, 0.9);
   --text: #0f1629;
   --muted: #5b6480;
-  --border: rgba(15, 22, 41, 0.08);
+  --border: rgba(15, 22, 41, 0.1);
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  --classic: rgba(15, 22, 41, 0.04);
   color-scheme: light;
 }
 
@@ -28,9 +30,8 @@
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.1), transparent 28%),
-    radial-gradient(circle at 70% 10%, rgba(37, 99, 235, 0.08), transparent 26%),
-    var(--bg);
+  background: radial-gradient(circle at 18% 22%, rgba(124, 58, 237, 0.14), transparent 30%),
+    radial-gradient(circle at 80% 12%, rgba(37, 99, 235, 0.1), transparent 30%), var(--bg);
   color: var(--text);
   min-height: 100vh;
   line-height: 1.6;
@@ -58,7 +59,7 @@ body {
   justify-content: space-between;
   padding: 16px 28px;
   backdrop-filter: blur(16px);
-  background: color-mix(in srgb, var(--bg) 75%, transparent);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
   border-bottom: 1px solid var(--border);
 }
 
@@ -77,6 +78,16 @@ body {
   color: #fff;
   border-radius: 12px;
   box-shadow: var(--shadow);
+}
+
+.brand.classic .brand-icon {
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+
+.brand-title {
+  font-family: 'Playfair Display', 'Inter', sans-serif;
+  letter-spacing: 0.01em;
 }
 
 .nav-links {
@@ -102,6 +113,7 @@ body {
 .top-actions {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .layout {
@@ -127,6 +139,11 @@ body {
   border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
 }
 
+.card.classic {
+  background: color-mix(in srgb, var(--card) 80%, var(--classic));
+  border-color: color-mix(in srgb, var(--border) 70%, var(--accent) 10%);
+}
+
 .hero {
   display: grid;
   gap: 24px;
@@ -137,7 +154,9 @@ body {
 
 .hero h1 {
   margin: 8px 0;
-  font-size: clamp(24px, 4vw, 34px);
+  font-size: clamp(26px, 4vw, 36px);
+  font-family: 'Playfair Display', 'Inter', sans-serif;
+  letter-spacing: 0.01em;
 }
 
 .muted {
@@ -158,6 +177,17 @@ body {
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 14px;
+}
+
+.input {
+  flex: 1;
+  min-width: 240px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 80%, transparent);
+  color: var(--text);
+  font-size: 15px;
 }
 
 .primary,
@@ -193,6 +223,14 @@ body {
   margin: 14px 0;
 }
 
+.grid.two-col {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid.three-col {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
 .pill-row {
   display: flex;
   gap: 8px;
@@ -215,6 +253,11 @@ body {
 .chip.success {
   background: color-mix(in srgb, #10b981 25%, var(--card));
   color: #0b5d3e;
+}
+
+.chip.subtle {
+  background: color-mix(in srgb, var(--card) 70%, var(--classic));
+  color: var(--muted);
 }
 
 .avatars {
@@ -246,7 +289,7 @@ body {
 
 .mini-metrics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
   margin-top: 14px;
 }
@@ -277,6 +320,12 @@ body {
   box-shadow: var(--shadow);
 }
 
+.glass-panel.classic {
+  inset: auto;
+  position: relative;
+  background: color-mix(in srgb, var(--card) 80%, var(--classic));
+}
+
 .panel-heading {
   display: flex;
   justify-content: space-between;
@@ -297,6 +346,10 @@ body {
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 70%, #3b82f6), #0f172a);
   border-radius: 10px 10px 6px 6px;
   animation: pulse 2.4s ease-in-out infinite;
+}
+
+.graph.tight {
+  height: 90px;
 }
 
 .grid.settings-grid .card {
@@ -387,6 +440,10 @@ input:checked + .slider:before {
   margin-top: 12px;
 }
 
+.actions-grid.tight {
+  gap: 8px;
+}
+
 .action-btn {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -415,6 +472,11 @@ input:checked + .slider:before {
 
 .card.slim {
   margin-bottom: 14px;
+}
+
+.classic-pane {
+  display: grid;
+  place-items: center;
 }
 
 .stats {
@@ -461,6 +523,109 @@ input:checked + .slider:before {
 
 .hero-visual .glass-panel p {
   margin: 0;
+}
+
+.subdomain-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.subdomain-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--card) 75%, transparent);
+}
+
+.subdomain-item .actions {
+  display: flex;
+  gap: 6px;
+}
+
+.subdomain-item strong {
+  font-size: 16px;
+}
+
+.subdomain-item p {
+  margin: 2px 0 0;
+  color: var(--muted);
+}
+
+.subdomain-item .chip {
+  padding: 4px 8px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.stat-block {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  background: color-mix(in srgb, var(--card) 75%, var(--classic));
+}
+
+.dial input {
+  width: 100%;
+}
+
+.switch-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.fidget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.status-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.status-list li {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  padding: 10px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+
+.fidget-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.toggle-row.padded {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+}
+
+input[type='range'] {
+  accent-color: var(--accent);
 }
 
 @keyframes float {
