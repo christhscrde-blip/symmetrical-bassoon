@@ -1,23 +1,24 @@
 :root {
-  --bg: #0f1624;
+  --bg: #0d1524;
   --card: rgba(255, 255, 255, 0.06);
   --text: #e9edf5;
-  --muted: #9ca7c0;
+  --muted: #a4aec4;
   --border: rgba(255, 255, 255, 0.12);
   --accent: #6c72ff;
-  --shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --accent-strong: #f5a524;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
   --classic: rgba(255, 255, 255, 0.08);
   color-scheme: dark;
 }
 
 :root[data-theme='light'] {
-  --bg: #f6f7fb;
-  --card: rgba(255, 255, 255, 0.94);
-  --text: #111827;
-  --muted: #55607a;
+  --bg: #f7f8fb;
+  --card: rgba(255, 255, 255, 0.96);
+  --text: #0f1624;
+  --muted: #5b647a;
   --border: rgba(0, 0, 0, 0.08);
-  --shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
-  --classic: rgba(17, 24, 39, 0.03);
+  --shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+  --classic: rgba(15, 22, 41, 0.04);
   color-scheme: light;
 }
 
@@ -42,10 +43,10 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(circle at 15% 20%, rgba(108, 114, 255, 0.16), transparent 35%),
-    radial-gradient(circle at 80% 10%, rgba(86, 100, 230, 0.14), transparent 35%);
-  filter: blur(80px);
-  opacity: 0.55;
+  background: radial-gradient(circle at 15% 20%, rgba(108, 114, 255, 0.18), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(245, 165, 36, 0.16), transparent 35%);
+  filter: blur(90px);
+  opacity: 0.5;
   z-index: 0;
 }
 
@@ -60,7 +61,7 @@ body {
   gap: 10px;
   padding: 14px 20px;
   backdrop-filter: blur(14px);
-  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
   border-bottom: 1px solid var(--border);
 }
 
@@ -110,7 +111,7 @@ body {
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--text);
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 90%, transparent);
 }
 
 .top-actions {
@@ -118,6 +119,35 @@ body {
   gap: 10px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.tab-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  max-width: 1100px;
+  margin: 10px auto 0;
+  padding: 0 clamp(14px, 4vw, 32px);
+}
+
+.tab {
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 120ms ease, background 180ms ease;
+}
+
+.tab:hover {
+  transform: translateY(-1px);
+}
+
+.tab.active {
+  background: color-mix(in srgb, var(--accent) 25%, var(--card));
 }
 
 .layout {
@@ -184,17 +214,6 @@ body {
   margin-top: 14px;
 }
 
-.input {
-  flex: 1;
-  min-width: 240px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--card) 80%, transparent);
-  color: var(--text);
-  font-size: 15px;
-}
-
 .primary,
 .ghost {
   border: 1px solid var(--border);
@@ -224,6 +243,36 @@ body {
 .primary.ghost {
   color: var(--text);
   background: color-mix(in srgb, var(--card) 85%, transparent);
+}
+
+.icon-btn {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.icon-svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.icon-svg.moon {
+  display: none;
+}
+
+[data-theme='dark'] .icon-svg {
+  display: none;
+}
+
+[data-theme='dark'] .icon-svg.moon {
+  display: inline-block;
 }
 
 .grid {
@@ -263,6 +312,17 @@ body {
 .chip.success {
   background: color-mix(in srgb, #10b981 25%, var(--card));
   color: #0b5d3e;
+}
+
+[data-theme='dark'] .chip.success,
+[data-theme='dark'] .chip.status {
+  background: color-mix(in srgb, var(--accent-strong) 35%, var(--card));
+  color: #2b1a01;
+}
+
+.chip.status {
+  background: color-mix(in srgb, var(--accent-strong) 30%, var(--card));
+  color: #2a1b01;
 }
 
 .chip.subtle {
@@ -634,22 +694,46 @@ input:checked + .slider:before {
   border-top: 1px dashed var(--border);
 }
 
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.shop-card {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 80%, transparent);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.shop-feature {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  background: color-mix(in srgb, var(--card) 80%, var(--classic));
+  display: grid;
+  gap: 6px;
+}
+
+.shop-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent-strong) 50%, var(--border));
+  background: linear-gradient(135deg, var(--accent-strong), color-mix(in srgb, var(--accent) 60%, var(--accent-strong)));
+}
+
 input[type='range'] {
   accent-color: var(--accent);
-}
-
-.icon {
-  font-size: 16px;
-  display: inline-block;
-  margin-right: 6px;
-}
-
-.action-btn.minimal {
-  grid-template-columns: auto 1fr;
-}
-
-.switch.compact {
-  transform: scale(0.9);
 }
 
 .slide-in {

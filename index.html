@@ -28,25 +28,44 @@
       </nav>
       <div class="top-actions">
         <span class="chip subtle" id="ip-chip">IP wird geladen …</span>
-        <label class="switch compact" aria-label="Theme wechseln">
-          <input type="checkbox" id="theme-toggle" />
-          <span class="slider"></span>
-        </label>
+        <button class="icon-btn" id="theme-toggle" aria-label="Theme wechseln">
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 3a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm0 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm9-5a1 1 0 0 1-1 1h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1Zm-8 7a1 1 0 1 1-2 0v-1a1 1 0 1 1 2 0v1Zm8.657-2.343a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 1 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414ZM5.05 6.464A1 1 0 0 1 6.465 5.05l.707.707A1 1 0 0 1 5.757 7.17l-.707-.707Zm13.9 0-.707.707A1 1 0 1 1 16.83 5.757l.707-.707a1 1 0 1 1 1.414 1.414ZM5 12a1 1 0 0 1-1 1H3a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1Zm1.464 6.536-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 1.414Z"
+            />
+          </svg>
+          <svg class="icon-svg moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M21 14.5A9.5 9.5 0 0 1 10.5 4a9.4 9.4 0 0 1 1.77-5A9.5 9.5 0 1 0 21 14.5Z"
+            />
+          </svg>
+        </button>
         <button class="primary ghost" id="quick-settings">
-          <span class="icon">⚙︎</span>
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm9 3.75a7.8 7.8 0 0 0-.06-.98l1.53-1.2a.5.5 0 0 0 .12-.63l-1.45-2.5a.5.5 0 0 0-.6-.22l-1.8.73a7.8 7.8 0 0 0-1.7-.98l-.27-1.9a.5.5 0 0 0-.5-.42h-2.9a.5.5 0 0 0-.5.42l-.27 1.9c-.6.23-1.17.54-1.7.9l-1.8-.76a.5.5 0 0 0-.6.22l-1.45 2.5a.5.5 0 0 0 .12.63l1.53 1.2a7.8 7.8 0 0 0 0 1.96l-1.53 1.2a.5.5 0 0 0-.12.63l1.45 2.5a.5.5 0 0 0 .6.22l1.8-.76c.53.36 1.1.67 1.7.9l.27 1.9a.5.5 0 0 0 .5.42h2.9a.5.5 0 0 0 .5-.42l.27-1.9c.6-.23 1.17-.54 1.7-.9l1.8.76a.5.5 0 0 0 .6-.22l1.45-2.5a.5.5 0 0 0-.12-.63l-1.53-1.2c.04-.32.06-.65.06-.98Z"
+            />
+          </svg>
           Settings
         </button>
       </div>
     </header>
 
+    <nav class="tab-bar">
+      <a class="tab active" href="#overview">Overview</a>
+      <a class="tab" href="#pulse">Pulse</a>
+      <a class="tab" href="#subdomains">Subdomains</a>
+      <a class="tab" href="#shop">Shop</a>
+    </nav>
+
     <main class="layout">
-      <section class="hero card classic slide-in">
+      <section id="overview" class="hero card classic slide-in">
         <div>
           <p class="eyebrow">Dashboard</p>
           <h1>Schlichte Übersicht, klarer Fokus</h1>
           <p class="muted">
-            Ein ruhiges Interface für schnelle Checks: IP, Performance, Sessions und ein
-            paar fähige Controls. Modern, aber nicht überfrachtet.
+            Ein ruhiges Interface für schnelle Checks: IP, Performance und ein paar klare
+            Bedienelemente. Modern wie Apple, reduziert wie fritz-kola.
           </p>
           <div class="hero-actions">
             <button class="primary" id="cta-start">Session starten</button>
@@ -78,7 +97,7 @@
                 <p class="eyebrow">Live Status</p>
                 <strong id="status-label">Stabil</strong>
               </div>
-              <span class="chip success" id="status-chip">Online</span>
+              <span class="chip status" id="status-chip">Online</span>
             </div>
             <div class="graph tight" id="sparkline">
               <div class="bar"></div>
@@ -102,13 +121,13 @@
         </div>
       </section>
 
-      <section class="grid two-col">
+      <section id="pulse" class="grid two-col">
         <article class="card classic slide-in">
           <div class="section-header">
             <div>
               <p class="eyebrow">Live Stats</p>
               <h3>Operational Pulse</h3>
-              <p class="muted">Simulierte Kennzahlen mit Schiebereglern und sanften Bewegungen.</p>
+              <p class="muted">Echte Messung deiner IP-Latenz plus regelbare Kennzahlen.</p>
             </div>
             <button class="ghost" id="freeze-stats">Freeze</button>
           </div>
@@ -169,19 +188,62 @@
               </label>
             </label>
             <button class="action-btn minimal" id="ping-test">
-              <span class="icon">↺</span>
+              <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 4v4l3-3m-3-1a8 8 0 1 0 7.9 9" />
+              </svg>
               <div>
                 <strong>Ping Test</strong>
                 <p class="muted small">Latenz messen</p>
               </div>
             </button>
             <button class="action-btn minimal" id="open-settings">
-              <span class="icon">⚙︎</span>
+              <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm9 3.75a7.8 7.8 0 0 0-.06-.98l1.53-1.2a.5.5 0 0 0 .12-.63l-1.45-2.5a.5.5 0 0 0-.6-.22l-1.8.73a7.8 7.8 0 0 0-1.7-.98l-.27-1.9a.5.5 0 0 0-.5-.42h-2.9a.5.5 0 0 0-.5.42l-.27 1.9c-.6.23-1.17.54-1.7.9l-1.8-.76a.5.5 0 0 0-.6.22l-1.45 2.5a.5.5 0 0 0 .12.63l1.53 1.2a7.8 7.8 0 0 0 0 1.96l-1.53 1.2a.5.5 0 0 0-.12.63l1.45 2.5a.5.5 0 0 0 .6.22l1.8-.76c.53.36 1.1.67 1.7.9l.27 1.9a.5.5 0 0 0 .5.42h2.9a.5.5 0 0 0 .5-.42l.27-1.9c.6-.23 1.17-.54 1.7-.9l1.8.76a.5.5 0 0 0 .6-.22l1.45-2.5a.5.5 0 0 0-.12-.63l-1.53-1.2c.04-.32.06-.65.06-.98Z"
+                />
+              </svg>
               <div>
                 <strong>Settings öffnen</strong>
                 <p class="muted small">Farben & Theme</p>
               </div>
             </button>
+          </div>
+        </article>
+      </section>
+
+      <section id="subdomains" class="grid two-col">
+        <article class="card classic slide-in">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Subdomains</p>
+              <h3>Schnellzugriff</h3>
+              <p class="muted">Mehr Ziele, weniger Text – aktivieren, öffnen, Status prüfen.</p>
+            </div>
+            <span class="chip subtle" id="active-label">3 aktiv</span>
+          </div>
+          <div class="subdomain-list" id="subdomain-list"></div>
+        </article>
+        <article class="card classic slide-in">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Navigation</p>
+              <h3>Reiter & Shop</h3>
+              <p class="muted">Springe zwischen Tabs oder öffne den Radioeins Shop.</p>
+            </div>
+          </div>
+          <div class="shop-grid">
+            <a class="shop-card" href="#overview">Zum Start</a>
+            <a class="shop-card" href="#pulse">Zu Pulse</a>
+            <a class="shop-card" href="#subdomains">Zu Subdomains</a>
+            <a class="shop-card" href="#shop">Zum Shop</a>
+          </div>
+          <div class="shop-feature" id="shop">
+            <p class="eyebrow">Radioeins</p>
+            <h3>Shop besuchen</h3>
+            <p class="muted">Radioeins Shop öffnen und stöbern.</p>
+            <a class="primary shop-link" href="https://shop.radioeins.de" target="_blank" rel="noreferrer">
+              Radioeins Shop
+            </a>
           </div>
         </article>
       </section>

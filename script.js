@@ -4,13 +4,23 @@ const prefersDark =
 
 const defaults = {
   theme: prefersDark ? 'dark' : 'light',
-  accent: '#7c3aed',
+  accent: '#6c72ff',
   motion: 'normal',
   pulse: true,
 };
 
 const state = {
   statsFrozen: false,
+  subdomains: [
+    { name: 'core.flow', status: 'Online' },
+    { name: 'metrics.flow', status: 'Online' },
+    { name: 'ops.flow', status: 'Teilweise' },
+    { name: 'shop.radioeins.de', status: 'Online' },
+    { name: 'stream.radioeins.de', status: 'Online' },
+    { name: 'cdn.flow', status: 'Wartung' },
+  ],
+  current: 'core.flow',
+  latencyMs: 52,
 };
 
 const loadPrefs = () => {
@@ -99,9 +109,8 @@ const wirePulse = (prefs) => {
     if (isCheckbox) el.checked = prefs.pulse;
     el.addEventListener(isCheckbox ? 'change' : 'click', () => {
       prefs.pulse = isCheckbox ? el.checked : !prefs.pulse;
-      if (pulseToggle && !isCheckbox) pulseToggle.textContent = prefs.pulse ? 'Pulse aktiv' : 'Pulse aus';
+      if (pulseToggle && !isCheckbox) pulseToggle.checked = prefs.pulse;
       if (pulsePref && !isCheckbox) pulsePref.checked = prefs.pulse;
-      if (pulsePref && isCheckbox) pulseToggle && (pulseToggle.textContent = prefs.pulse ? 'Pulse aktiv' : 'Pulse aus');
       applyPulse(prefs.pulse);
       savePrefs(prefs);
     });
@@ -131,8 +140,6 @@ const animateSessions = () => {
     el.textContent = value;
   }, 2200);
 };
-
-const randomStatus = () => (Math.random() > 0.85 ? 'Wartung' : 'Online');
 
 const liveStats = () => {
   const latency = document.getElementById('latency');
@@ -166,22 +173,35 @@ const liveStats = () => {
   Object.values(sliders).forEach((slider) => slider?.addEventListener('input', updateSliderDisplays));
   updateSliderDisplays();
 
-  setInterval(() => {
+  const applyLatencyMeasurement = (ms) => {
     if (state.statsFrozen) return;
-    const jitter = (val, maxDelta, min, max) => {
-      const delta = (Math.random() * 2 - 1) * maxDelta;
-      return Math.min(max, Math.max(min, Math.round(val + delta)));
-    };
-    sliders.throughput.value = jitter(Number(sliders.throughput.value), 90, 200, 2000);
-    sliders.queue.value = jitter(Number(sliders.queue.value), 5, 0, 50);
-    sliders.cpu.value = jitter(Number(sliders.cpu.value), 6, 5, 95);
-    sliders.latency.value = jitter(Number(sliders.latency.value), 10, 20, 180);
+    state.latencyMs = ms;
+    const throughputCalc = Math.min(2000, Math.max(200, Math.round(60000 / Math.max(ms, 20)))));
+    sliders.latency.value = Math.min(180, Math.max(20, Math.round(ms)));
+    sliders.throughput.value = throughputCalc;
+    sliders.queue.value = Math.max(0, Math.min(50, Math.round(60 - throughputCalc / 40)));
+    sliders.cpu.value = Math.max(5, Math.min(95, Math.round(20 + throughputCalc / 40)));
     updateSliderDisplays();
-    latency && (latency.textContent = `${sliders.latency.value} ms`);
-    bars.forEach((bar) => {
-      bar.style.height = `${jitter(60, 18, 30, 90)}%`;
+    latency && (latency.textContent = `${Math.round(ms)} ms`);
+    bars.forEach((bar, idx) => {
+      const base = 30 + throughputCalc / 40 - idx * 3;
+      bar.style.height = `${Math.max(24, Math.min(90, base))}%`;
     });
-  }, 1700);
+  };
+
+  const measureLatency = () => {
+    const start = performance.now();
+    return fetch('https://api.ipify.org?format=json', { cache: 'no-store' })
+      .then(() => performance.now() - start)
+      .catch(() => 120 + Math.random() * 80);
+  };
+
+  const loop = async () => {
+    const ms = await measureLatency();
+    applyLatencyMeasurement(ms);
+    setTimeout(loop, 7000);
+  };
+  loop();
 };
 
 const fetchIP = () => {
@@ -212,6 +232,44 @@ const accentRandomizer = (prefs) => {
   });
 };
 
+const renderSubdomains = () => {
+  const list = document.getElementById('subdomain-list');
+  if (!list) return;
+  list.innerHTML = '';
+  state.subdomains.forEach(({ name, status }) => {
+    const item = document.createElement('div');
+    item.className = 'subdomain-item';
+    item.innerHTML = `
+      <div>
+        <strong>${name}</strong>
+        <p>Status: <span class="chip ${status === 'Online' ? 'success status' : 'status'}">${status}</span></p>
+      </div>
+      <div class="actions">
+        <button class="chip" data-action="activate">Aktivieren</button>
+        <button class="chip subtle" data-action="open">Öffnen</button>
+      </div>
+    `;
+    item.querySelectorAll('button').forEach((btn) => {
+      btn.addEventListener('click', () => handleSubdomainAction(btn.dataset.action, name));
+    });
+    list.appendChild(item);
+  });
+  document.getElementById('active-label')?.textContent = `${state.subdomains.length} aktiv`;
+};
+
+const handleSubdomainAction = (action, name) => {
+  if (action === 'activate') {
+    state.current = name;
+    const label = document.getElementById('status-label');
+    const chip = document.getElementById('status-chip');
+    if (label) label.textContent = name;
+    if (chip) chip.textContent = 'Online';
+  }
+  if (action === 'open') {
+    window.open(`https://${name}`, '_blank');
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   const prefs = loadPrefs();
   applyTheme(prefs.theme);
@@ -225,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
   wirePulse(prefs);
   wireAccent(prefs);
   accentRandomizer(prefs);
+  renderSubdomains();
   animateSessions();
   liveStats();
   fetchIP();
