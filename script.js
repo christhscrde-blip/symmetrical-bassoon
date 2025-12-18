@@ -7,6 +7,9 @@ const defaults = {
   accent: '#6c72ff',
   motion: 'normal',
   pulse: true,
+  noteTitle: '',
+  noteBody: '',
+  noteSubdomain: '',
 };
 
 const state = {
@@ -18,6 +21,8 @@ const state = {
     { name: 'shop.radioeins.de', status: 'Online' },
     { name: 'stream.radioeins.de', status: 'Online' },
     { name: 'cdn.flow', status: 'Wartung' },
+    { name: 'media.flow', status: 'Online' },
+    { name: 'beta.flow', status: 'Wartung' },
   ],
   current: 'core.flow',
   latencyMs: 52,
@@ -232,6 +237,56 @@ const accentRandomizer = (prefs) => {
   });
 };
 
+const loadNotes = (prefs) => {
+  const title = document.getElementById('note-title');
+  const body = document.getElementById('note-body');
+  const sub = document.getElementById('note-subdomain');
+  const status = document.getElementById('note-status');
+  if (!title || !body || !sub) return;
+  title.value = prefs.noteTitle || '';
+  body.value = prefs.noteBody || '';
+  sub.value = prefs.noteSubdomain || '';
+  if (status && (prefs.noteTitle || prefs.noteBody || prefs.noteSubdomain)) {
+    status.textContent = 'Gespeichert';
+  }
+};
+
+const wireNotes = (prefs) => {
+  const form = document.getElementById('notes-form');
+  const title = document.getElementById('note-title');
+  const body = document.getElementById('note-body');
+  const sub = document.getElementById('note-subdomain');
+  const status = document.getElementById('note-status');
+  if (!form || !title || !body || !sub) return;
+
+  const persist = () => {
+    prefs.noteTitle = title.value;
+    prefs.noteBody = body.value;
+    prefs.noteSubdomain = sub.value;
+    savePrefs(prefs);
+    if (status) status.textContent = 'Gespeichert';
+  };
+
+  [title, body, sub].forEach((el) => el.addEventListener('input', persist));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    persist();
+  });
+};
+
+const wireTabs = () => {
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.dataset.target;
+      const target = document.getElementById(targetId);
+      tabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+};
+
 const renderSubdomains = () => {
   const list = document.getElementById('subdomain-list');
   if (!list) return;
@@ -287,6 +342,9 @@ document.addEventListener('DOMContentLoaded', () => {
   animateSessions();
   liveStats();
   fetchIP();
+  loadNotes(prefs);
+  wireNotes(prefs);
+  wireTabs();
 
   const refreshIp = document.getElementById('refresh-ip');
   refreshIp?.addEventListener('click', fetchIP);

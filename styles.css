@@ -30,7 +30,7 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -140,6 +140,7 @@ body {
   text-decoration: none;
   font-weight: 600;
   transition: transform 120ms ease, background 180ms ease;
+  cursor: pointer;
 }
 
 .tab:hover {
@@ -187,10 +188,16 @@ body {
   margin-bottom: 20px;
 }
 
+.hero h1,
+h2,
+h3 {
+  font-family: 'Source Serif 4', 'DM Sans', serif;
+}
+
 .hero h1 {
   margin: 8px 0;
   font-size: clamp(26px, 4vw, 36px);
-  font-family: 'Playfair Display', 'Inter', sans-serif;
+  font-family: 'Source Serif 4', 'DM Sans', serif;
   letter-spacing: 0.01em;
 }
 
@@ -738,6 +745,57 @@ input[type='range'] {
 
 .slide-in {
   animation: slide-in 420ms ease 1;
+}
+
+.map-frame {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 260px;
+  box-shadow: var(--shadow);
+  background: color-mix(in srgb, var(--card) 80%, var(--classic));
+}
+
+.map-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.notes-form {
+  display: grid;
+  gap: 10px;
+}
+
+.notes-form label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.notes-form input,
+.notes-form textarea {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  background: color-mix(in srgb, var(--card) 80%, transparent);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+.notes-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer {
+  text-align: center;
+  padding: 24px 16px 40px;
+  color: var(--muted);
+  font-weight: 600;
 }
 
 @keyframes slide-in {
