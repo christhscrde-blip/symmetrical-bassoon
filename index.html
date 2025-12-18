@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flowdesk – Interface</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-glow"></div>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">F</div>
+        <div>
+          <p class="eyebrow">Flowdesk</p>
+          <strong>Interface</strong>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a class="active" href="./index.html">Start</a>
+        <a href="./settings.html">Settings</a>
+      </nav>
+      <div class="top-actions">
+        <button class="ghost" id="theme-toggle" aria-label="Theme wechseln">
+          🌗
+        </button>
+        <button class="primary">Live starten</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="hero card">
+        <div>
+          <p class="eyebrow">Dashboard</p>
+          <h1>Angenehm smoothes Interface</h1>
+          <p class="muted">
+            Eine leichte, reaktive Oberfläche für deine Projekte. Schnell, ruhig und
+            sofort einsatzbereit – mit einem klaren Blick auf das, was zählt.
+          </p>
+          <div class="hero-actions">
+            <button class="primary">Jetzt loslegen</button>
+            <button class="ghost" onclick="window.location='settings.html'">
+              Einstellungen öffnen
+            </button>
+          </div>
+          <div class="mini-metrics">
+            <div>
+              <p class="muted">Aktive Sessions</p>
+              <strong id="session-counter">12</strong>
+            </div>
+            <div>
+              <p class="muted">Antwortzeit</p>
+              <strong>48 ms</strong>
+            </div>
+            <div>
+              <p class="muted">Uptime</p>
+              <strong>99,9%</strong>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="orb"></div>
+          <div class="glass-panel">
+            <div class="panel-heading">
+              <p class="muted">Live Feed</p>
+              <span class="chip success">Stabil</span>
+            </div>
+            <div class="graph">
+              <div class="bar" style="height: 55%"></div>
+              <div class="bar" style="height: 72%"></div>
+              <div class="bar" style="height: 65%"></div>
+              <div class="bar" style="height: 85%"></div>
+              <div class="bar" style="height: 60%"></div>
+            </div>
+            <p class="muted">Smooth Animationen, sanfte Kurven.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <p class="eyebrow">Workflows</p>
+          <h3>Modulare Schritte</h3>
+          <p class="muted">
+            Baue deine Abläufe aus smarten Bausteinen. Jedes Modul lässt sich in Sekunden
+            neu anordnen.
+          </p>
+          <div class="pill-row">
+            <span class="chip">Trigger</span>
+            <span class="chip">Logik</span>
+            <span class="chip">Ausgabe</span>
+          </div>
+        </article>
+        <article class="card">
+          <p class="eyebrow">Team</p>
+          <h3>Live Presence</h3>
+          <p class="muted">
+            Sieh, wer gerade mit dir arbeitet. Soft color-pings und Avatare halten dich auf
+            dem Laufenden.
+          </p>
+          <div class="avatars">
+            <span class="avatar">A</span>
+            <span class="avatar">B</span>
+            <span class="avatar">C</span>
+            <span class="avatar muted-avatar">+3</span>
+          </div>
+        </article>
+        <article class="card highlight">
+          <p class="eyebrow">Flow</p>
+          <h3>Sanfte Übergänge</h3>
+          <p class="muted">
+            Übergänge mit leichter Verzögerung und reduzierten Motion-Effekten für
+            maximale Ruhe.
+          </p>
+          <button class="primary ghost" onclick="window.location='settings.html'">
+            Motion anpassen
+          </button>
+        </article>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Quick Actions</p>
+            <h3>Fühle dich wie im Flow</h3>
+            <p class="muted">
+              Aktionen sind vorgelagert, damit du weniger klicken musst. Alles ist
+              kontextsensitiv und reagiert smooth.
+            </p>
+          </div>
+          <button class="ghost" id="pulse-toggle">Pulse aktiv</button>
+        </div>
+        <div class="actions-grid">
+          <button class="action-btn">
+            <span>➜</span>
+            <div>
+              <strong>Neue Session</strong>
+              <p class="muted small">Startet mit Standard-Settings</p>
+            </div>
+          </button>
+          <button class="action-btn">
+            <span>⌘</span>
+            <div>
+              <strong>Shortcut-Overlay</strong>
+              <p class="muted small">Sofortige Tastenkombis</p>
+            </div>
+          </button>
+          <button class="action-btn">
+            <span>✦</span>
+            <div>
+              <strong>Theme wechseln</strong>
+              <p class="muted small">Farbwelt live umschalten</p>
+            </div>
+          </button>
+          <button class="action-btn">
+            <span>☼</span>
+            <div>
+              <strong>Ruhige Phase</strong>
+              <p class="muted small">Reduziert Animationen</p>
+            </div>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
