@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flowdesk Control – Subdomains & Live Ops</title>
+    <title>Flowdesk – Übersicht</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,51 +19,51 @@
         <div class="brand-icon">F</div>
         <div>
           <p class="eyebrow">Flowdesk</p>
-          <strong class="brand-title">Control Desk</strong>
+          <strong class="brand-title">Overview</strong>
         </div>
       </div>
       <nav class="nav-links">
-        <a class="active" href="./index.html">Console</a>
-        <a href="./settings.html">Settings</a>
+        <a class="active" href="./index.html">Start</a>
+        <a href="https://christhscrde-blip.github.io/symmetrical-bassoon/settings">Settings</a>
       </nav>
       <div class="top-actions">
         <span class="chip subtle" id="ip-chip">IP wird geladen …</span>
-        <button class="ghost" id="theme-toggle" aria-label="Theme wechseln">🌗</button>
-        <button class="primary">Go Live</button>
+        <label class="switch compact" aria-label="Theme wechseln">
+          <input type="checkbox" id="theme-toggle" />
+          <span class="slider"></span>
+        </label>
+        <button class="primary ghost" id="quick-settings">
+          <span class="icon">⚙︎</span>
+          Settings
+        </button>
       </div>
     </header>
 
     <main class="layout">
-      <section class="hero card classic">
+      <section class="hero card classic slide-in">
         <div>
-          <p class="eyebrow">Subdomain Console</p>
-          <h1>Eigene Subdomains, live bedienbar</h1>
+          <p class="eyebrow">Dashboard</p>
+          <h1>Schlichte Übersicht, klarer Fokus</h1>
           <p class="muted">
-            Lege Feature-Subdomains an, wechsle zwischen ihnen und verfolge ihre Telemetrie
-            in Echtzeit. Klassisch-modern, kein GPT-Look, aber genauso smooth.
+            Ein ruhiges Interface für schnelle Checks: IP, Performance, Sessions und ein
+            paar fähige Controls. Modern, aber nicht überfrachtet.
           </p>
           <div class="hero-actions">
-            <input
-              class="input"
-              id="subdomain-input"
-              placeholder="z. B. studio.flowdesk.dev"
-              aria-label="Subdomain eingeben"
-            />
-            <button class="primary" id="add-subdomain">Subdomain anlegen</button>
-            <button class="ghost" id="open-current">Subdomain öffnen</button>
+            <button class="primary" id="cta-start">Session starten</button>
+            <button class="ghost" id="cta-settings">Zu Settings</button>
           </div>
           <div class="mini-metrics">
             <div>
-              <p class="muted">Aktive Subdomains</p>
-              <strong id="subdomain-count">3</strong>
-            </div>
-            <div>
-              <p class="muted">Live Sessions</p>
+              <p class="muted">Aktive Sessions</p>
               <strong id="session-counter">14</strong>
             </div>
             <div>
-              <p class="muted">Aktuelle Latenz</p>
+              <p class="muted">Antwortzeit</p>
               <strong id="latency">42 ms</strong>
+            </div>
+            <div>
+              <p class="muted">Durchsatz</p>
+              <strong id="throughput">1.2k req/min</strong>
             </div>
             <div>
               <p class="muted">Deine IP</p>
@@ -75,10 +75,10 @@
           <div class="glass-panel classic">
             <div class="panel-heading">
               <div>
-                <p class="eyebrow">Aktive Subdomain</p>
-                <strong id="current-subdomain">core.flow</strong>
+                <p class="eyebrow">Live Status</p>
+                <strong id="status-label">Stabil</strong>
               </div>
-              <span class="chip success" id="current-status">Online</span>
+              <span class="chip success" id="status-chip">Online</span>
             </div>
             <div class="graph tight" id="sparkline">
               <div class="bar"></div>
@@ -87,9 +87,15 @@
               <div class="bar"></div>
               <div class="bar"></div>
             </div>
-            <p class="muted" id="subdomain-note">Routing stabil – 99,96% Uptime</p>
+            <p class="muted" id="subdomain-note">Aktuelle Auslastung im grünen Bereich.</p>
             <div class="fidget-row">
-              <button class="chip" id="shuffle-subdomain">Zufällige Subdomain</button>
+              <label class="switch-row">
+                <span>Pulse</span>
+                <label class="switch">
+                  <input type="checkbox" id="pulse-toggle" />
+                  <span class="slider"></span>
+                </label>
+              </label>
               <button class="chip subtle" id="refresh-ip">IP aktualisieren</button>
             </div>
           </div>
@@ -97,40 +103,25 @@
       </section>
 
       <section class="grid two-col">
-        <article class="card classic">
-          <div class="section-header">
-            <div>
-              <p class="eyebrow">Subdomains</p>
-              <h3>Verwalte deine Ziele</h3>
-              <p class="muted">Aktiviere, dupliziere oder lösche Subdomains mit einem Klick.</p>
-            </div>
-            <span class="chip subtle" id="active-label">3 aktiv</span>
-          </div>
-          <div class="subdomain-list" id="subdomain-list"></div>
-        </article>
-
-        <article class="card classic">
+        <article class="card classic slide-in">
           <div class="section-header">
             <div>
               <p class="eyebrow">Live Stats</p>
               <h3>Operational Pulse</h3>
-              <p class="muted">
-                Reaktionszeit, Throughput und Queue werden live simuliert – perfekt zum
-                Beobachten und Spielen.
-              </p>
+              <p class="muted">Simulierte Kennzahlen mit Schiebereglern und sanften Bewegungen.</p>
             </div>
             <button class="ghost" id="freeze-stats">Freeze</button>
           </div>
           <div class="stats-grid">
             <div class="stat-block">
               <p class="muted">Throughput</p>
-              <strong id="throughput">1.2k req/min</strong>
+              <strong id="throughput-live">1.2k req/min</strong>
               <div class="dial">
                 <input type="range" min="200" max="2000" value="1200" id="throughput-slider" />
               </div>
             </div>
             <div class="stat-block">
-              <p class="muted">Queue Depth</p>
+              <p class="muted">Queue</p>
               <strong id="queue">12 Tasks</strong>
               <div class="dial">
                 <input type="range" min="0" max="50" value="12" id="queue-slider" />
@@ -151,24 +142,18 @@
               </div>
             </div>
           </div>
-          <div class="toggle-row padded">
-            <span>Automatische Pulse</span>
-            <label class="switch">
-              <input type="checkbox" id="auto-pulse" checked />
-              <span class="slider"></span>
-            </label>
-          </div>
         </article>
-      </section>
 
-      <section class="grid three-col">
-        <article class="card classic">
-          <p class="eyebrow">Fidgets</p>
-          <h3>Spielwiese</h3>
-          <p class="muted">Buttons, Toggles, Knobs – alles interaktiv.</p>
+        <article class="card classic slide-in">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Bedienelemente</p>
+              <h3>Fidgets & Aktionen</h3>
+              <p class="muted">Wenige, klare Controls statt Sci-Fi.</p>
+            </div>
+            <button class="ghost" id="accent-random">Akzent wechseln</button>
+          </div>
           <div class="fidget-grid">
-            <button class="chip" id="pulse-toggle">Pulse aktiv</button>
-            <button class="chip subtle" id="accent-random">Zufalls-Akzent</button>
             <label class="switch-row">
               <span>Motion reduzieren</span>
               <label class="switch">
@@ -183,46 +168,21 @@
                 <span class="slider"></span>
               </label>
             </label>
-          </div>
-        </article>
-
-        <article class="card classic">
-          <p class="eyebrow">Shortcuts</p>
-          <h3>Direktzugriffe</h3>
-          <div class="actions-grid tight">
-            <button class="action-btn">
-              <span>↺</span>
+            <button class="action-btn minimal" id="ping-test">
+              <span class="icon">↺</span>
               <div>
                 <strong>Ping Test</strong>
-                <p class="muted small">Aktuelle Latenz prüfen</p>
+                <p class="muted small">Latenz messen</p>
               </div>
             </button>
-            <button class="action-btn" onclick="window.location='settings.html'">
-              <span>⚙︎</span>
+            <button class="action-btn minimal" id="open-settings">
+              <span class="icon">⚙︎</span>
               <div>
                 <strong>Settings öffnen</strong>
-                <p class="muted small">Theme & Akzent anpassen</p>
-              </div>
-            </button>
-            <button class="action-btn">
-              <span>⇆</span>
-              <div>
-                <strong>Routing neu laden</strong>
-                <p class="muted small">Subdomain-Zuweisung</p>
+                <p class="muted small">Farben & Theme</p>
               </div>
             </button>
           </div>
-        </article>
-
-        <article class="card classic">
-          <p class="eyebrow">Status</p>
-          <h3>Klassische Übersicht</h3>
-          <ul class="status-list" id="status-list">
-            <li><span>Audit Trail</span><strong>Aktiv</strong></li>
-            <li><span>SSL</span><strong>Erzwingt</strong></li>
-            <li><span>Cache</span><strong>Warm</strong></li>
-            <li><span>Traffic</span><strong>347 req/s</strong></li>
-          </ul>
         </article>
       </section>
     </main>

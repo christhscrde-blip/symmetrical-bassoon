@@ -10,12 +10,6 @@ const defaults = {
 };
 
 const state = {
-  subdomains: [
-    { name: 'core.flow', status: 'Online' },
-    { name: 'metrics.flow', status: 'Online' },
-    { name: 'ops.flow', status: 'Teilweise' },
-  ],
-  current: 'core.flow',
   statsFrozen: false,
 };
 
@@ -70,7 +64,7 @@ const wireThemeToggle = (prefs) => {
   const toggles = [document.getElementById('theme-toggle'), document.getElementById('dark-mode-toggle')];
   toggles.forEach((toggle) => {
     if (!toggle) return;
-    toggle.checked = prefs.theme === 'dark';
+    if (toggle.type === 'checkbox') toggle.checked = prefs.theme === 'dark';
     const handler = () => {
       prefs.theme = prefs.theme === 'dark' ? 'light' : 'dark';
       applyTheme(prefs.theme);
@@ -140,97 +134,11 @@ const animateSessions = () => {
 
 const randomStatus = () => (Math.random() > 0.85 ? 'Wartung' : 'Online');
 
-const renderSubdomains = () => {
-  const list = document.getElementById('subdomain-list');
-  if (!list) return;
-  list.innerHTML = '';
-  state.subdomains.forEach(({ name, status }) => {
-    const item = document.createElement('div');
-    item.className = 'subdomain-item';
-    item.innerHTML = `
-      <div>
-        <strong>${name}</strong>
-        <p>Status: <span class="chip ${status === 'Online' ? 'success' : ''}">${status}</span></p>
-      </div>
-      <div class="actions">
-        <button class="chip" data-action="activate">Aktivieren</button>
-        <button class="chip subtle" data-action="duplicate">Duplizieren</button>
-        <button class="chip subtle" data-action="remove">Löschen</button>
-      </div>
-    `;
-    item.querySelectorAll('button').forEach((btn) => {
-      btn.addEventListener('click', () => handleSubdomainAction(btn.dataset.action, name));
-    });
-    list.appendChild(item);
-  });
-  document.getElementById('subdomain-count')?.textContent = state.subdomains.length;
-  document.getElementById('active-label')?.textContent = `${state.subdomains.length} aktiv`;
-};
-
-const handleSubdomainAction = (action, name) => {
-  if (action === 'activate') {
-    state.current = name;
-    updateCurrentSubdomain();
-  } else if (action === 'duplicate') {
-    const next = `${name.split('.')[0]}-copy.${name.split('.').slice(1).join('.')}`;
-    state.subdomains.push({ name: next, status: randomStatus() });
-    renderSubdomains();
-  } else if (action === 'remove') {
-    state.subdomains = state.subdomains.filter((s) => s.name !== name);
-    if (state.current === name && state.subdomains.length) {
-      state.current = state.subdomains[0].name;
-    }
-    renderSubdomains();
-    updateCurrentSubdomain();
-  }
-};
-
-const wireSubdomainForm = () => {
-  const input = document.getElementById('subdomain-input');
-  const add = document.getElementById('add-subdomain');
-  const open = document.getElementById('open-current');
-  if (add && input) {
-    add.addEventListener('click', () => {
-      const value = input.value.trim();
-      if (!value) return;
-      state.subdomains.push({ name: value, status: 'Online' });
-      state.current = value;
-      input.value = '';
-      renderSubdomains();
-      updateCurrentSubdomain();
-    });
-  }
-  if (open) {
-    open.addEventListener('click', () => {
-      alert(`Subdomain "${state.current}" geöffnet (simuliert).`);
-    });
-  }
-  const shuffle = document.getElementById('shuffle-subdomain');
-  if (shuffle) {
-    shuffle.addEventListener('click', () => {
-      const pick = state.subdomains[Math.floor(Math.random() * state.subdomains.length)];
-      state.current = pick.name;
-      updateCurrentSubdomain();
-    });
-  }
-};
-
-const updateCurrentSubdomain = () => {
-  const current = document.getElementById('current-subdomain');
-  const note = document.getElementById('subdomain-note');
-  const status = document.getElementById('current-status');
-  if (!current || !status) return;
-  const match = state.subdomains.find((s) => s.name === state.current) || state.subdomains[0];
-  current.textContent = match?.name || '–';
-  status.textContent = match?.status || 'Offline';
-  status.classList.toggle('success', match?.status === 'Online');
-  if (note) note.textContent = match?.status === 'Online' ? 'Routing stabil – 99,96% Uptime' : 'Wartung aktiv – Rollback möglich';
-};
-
 const liveStats = () => {
   const latency = document.getElementById('latency');
   const latencyLive = document.getElementById('latency-live');
   const throughput = document.getElementById('throughput');
+  const throughputLive = document.getElementById('throughput-live');
   const queue = document.getElementById('queue');
   const cpu = document.getElementById('cpu');
   const bars = document.querySelectorAll('#sparkline .bar');
@@ -248,7 +156,9 @@ const liveStats = () => {
     });
   }
   const updateSliderDisplays = () => {
-    throughput && (throughput.textContent = `${sliders.throughput.value} req/min`);
+    const throughputText = `${Math.round(sliders.throughput.value)} req/min`;
+    throughput && (throughput.textContent = throughputText);
+    throughputLive && (throughputLive.textContent = throughputText);
     queue && (queue.textContent = `${sliders.queue.value} Tasks`);
     cpu && (cpu.textContent = `${sliders.cpu.value}%`);
     latencyLive && (latencyLive.textContent = `${sliders.latency.value} ms`);
@@ -262,16 +172,16 @@ const liveStats = () => {
       const delta = (Math.random() * 2 - 1) * maxDelta;
       return Math.min(max, Math.max(min, Math.round(val + delta)));
     };
-    sliders.throughput.value = jitter(Number(sliders.throughput.value), 120, 200, 2000);
-    sliders.queue.value = jitter(Number(sliders.queue.value), 6, 0, 50);
-    sliders.cpu.value = jitter(Number(sliders.cpu.value), 8, 5, 95);
-    sliders.latency.value = jitter(Number(sliders.latency.value), 14, 20, 180);
+    sliders.throughput.value = jitter(Number(sliders.throughput.value), 90, 200, 2000);
+    sliders.queue.value = jitter(Number(sliders.queue.value), 5, 0, 50);
+    sliders.cpu.value = jitter(Number(sliders.cpu.value), 6, 5, 95);
+    sliders.latency.value = jitter(Number(sliders.latency.value), 10, 20, 180);
     updateSliderDisplays();
     latency && (latency.textContent = `${sliders.latency.value} ms`);
     bars.forEach((bar) => {
-      bar.style.height = `${jitter(60, 25, 24, 96)}%`;
+      bar.style.height = `${jitter(60, 18, 30, 90)}%`;
     });
-  }, 1600);
+  }, 1700);
 };
 
 const fetchIP = () => {
@@ -315,9 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
   wirePulse(prefs);
   wireAccent(prefs);
   accentRandomizer(prefs);
-  renderSubdomains();
-  wireSubdomainForm();
-  updateCurrentSubdomain();
   animateSessions();
   liveStats();
   fetchIP();
@@ -325,14 +232,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const refreshIp = document.getElementById('refresh-ip');
   refreshIp?.addEventListener('click', fetchIP);
 
-  const openCurrent = document.getElementById('open-current');
-  openCurrent?.addEventListener('click', () => {
-    const info = document.getElementById('status-list');
-    if (info) {
-      const li = document.createElement('li');
-      li.innerHTML = `<span>Zuletzt geöffnet</span><strong>${state.current}</strong>`;
-      info.prepend(li);
-      if (info.children.length > 6) info.removeChild(info.lastChild);
-    }
+  document.getElementById('cta-settings')?.addEventListener('click', () => {
+    window.location.href = 'https://christhscrde-blip.github.io/symmetrical-bassoon/settings';
   });
+  document.getElementById('open-settings')?.addEventListener('click', () => {
+    window.location.href = 'https://christhscrde-blip.github.io/symmetrical-bassoon/settings';
+  });
+  document.getElementById('quick-settings')?.addEventListener('click', () => {
+    window.location.href = 'https://christhscrde-blip.github.io/symmetrical-bassoon/settings';
+  });
+  document.getElementById('ping-test')?.addEventListener('click', () => {
+    const latency = document.getElementById('latency');
+    if (latency) latency.textContent = `${20 + Math.round(Math.random() * 80)} ms`;
+  });
+
+  const darkToggle = document.getElementById('dark-mode-toggle');
+  if (darkToggle) {
+    darkToggle.checked = prefs.theme === 'dark';
+    darkToggle.addEventListener('change', () => {
+      prefs.theme = darkToggle.checked ? 'dark' : 'light';
+      applyTheme(prefs.theme);
+      savePrefs(prefs);
+      syncStats(prefs);
+    });
+  }
 });
