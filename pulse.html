@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flowdesk – Übersicht</title>
+    <title>Flowdesk – Pulse</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,11 +19,11 @@
         <div class="brand-icon">F</div>
         <div>
           <p class="eyebrow">Flowdesk</p>
-          <strong class="brand-title">Overview</strong>
+          <strong class="brand-title">Pulse</strong>
         </div>
       </div>
       <nav class="nav-links">
-        <a class="active" href="./index.html">Start</a>
+        <a href="./index.html">Start</a>
         <a href="https://christhscrde-blip.github.io/symmetrical-bassoon/settings">Settings</a>
       </nav>
       <div class="top-actions">
@@ -50,8 +50,8 @@
     </header>
 
     <nav class="pill-nav" role="tablist">
-      <a class="pill active" href="./index.html">Overview</a>
-      <a class="pill" href="./pulse.html">Pulse</a>
+      <a class="pill" href="./index.html">Overview</a>
+      <a class="pill active" href="./pulse.html">Pulse</a>
       <a class="pill" href="./subdomains.html">Subdomains</a>
       <a class="pill" href="./shop.html">Shop</a>
       <a class="pill" href="./map.html">Map</a>
@@ -59,69 +59,7 @@
     </nav>
 
     <main class="layout">
-      <section id="overview" class="hero card classic slide-in">
-        <div>
-          <p class="eyebrow">Dashboard</p>
-          <h1>Schlichte Übersicht, klarer Fokus</h1>
-          <p class="muted">
-            Ein ruhiges Interface für schnelle Checks: IP, Performance und ein paar klare
-            Bedienelemente. Modern wie Apple, reduziert wie fritz-kola.
-          </p>
-          <div class="hero-actions">
-            <button class="primary" id="cta-start">Session starten</button>
-            <button class="ghost" id="cta-settings">Zu Settings</button>
-          </div>
-          <div class="mini-metrics">
-            <div>
-              <p class="muted">Aktive Sessions</p>
-              <strong id="session-counter">14</strong>
-            </div>
-            <div>
-              <p class="muted">Antwortzeit</p>
-              <strong id="latency">42 ms</strong>
-            </div>
-            <div>
-              <p class="muted">Durchsatz</p>
-              <strong id="throughput">1.2k req/min</strong>
-            </div>
-            <div>
-              <p class="muted">Deine IP</p>
-              <strong id="ip-text">–</strong>
-            </div>
-          </div>
-        </div>
-        <div class="hero-visual classic-pane">
-          <div class="glass-panel classic">
-            <div class="panel-heading">
-              <div>
-                <p class="eyebrow">Live Status</p>
-                <strong id="status-label">Stabil</strong>
-              </div>
-              <span class="chip status" id="status-chip">Online</span>
-            </div>
-            <div class="graph tight" id="sparkline">
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
-            </div>
-            <p class="muted" id="subdomain-note">Aktuelle Auslastung im grünen Bereich.</p>
-            <div class="fidget-row">
-              <label class="switch-row">
-                <span>Pulse</span>
-                <label class="switch">
-                  <input type="checkbox" id="pulse-toggle" />
-                  <span class="slider"></span>
-                </label>
-              </label>
-              <button class="chip subtle" id="refresh-ip">IP aktualisieren</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="pulse" class="grid two-col">
+      <section class="grid two-col">
         <article class="card classic slide-in">
           <div class="section-header">
             <div>
@@ -168,7 +106,7 @@
             <div>
               <p class="eyebrow">Bedienelemente</p>
               <h3>Fidgets & Aktionen</h3>
-              <p class="muted">Wenige, klare Controls – jetzt mit funktionierendem Theme.</p>
+              <p class="muted">Schnellzugriffe und Theme/Animations-Schalter.</p>
             </div>
             <button class="ghost" id="accent-random">Akzent wechseln</button>
           </div>

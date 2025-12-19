@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flowdesk – Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-glow"></div>
+    <header class="topbar classic">
+      <div class="brand classic">
+        <div class="brand-icon">F</div>
+        <div>
+          <p class="eyebrow">Flowdesk</p>
+          <strong class="brand-title">Map</strong>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="./index.html">Start</a>
+        <a href="https://christhscrde-blip.github.io/symmetrical-bassoon/settings">Settings</a>
+      </nav>
+      <div class="top-actions">
+        <span class="chip subtle" id="ip-chip">IP wird geladen …</span>
+        <button class="icon-btn" id="theme-toggle" aria-label="Theme wechseln">
+          <svg class="icon-svg sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 4.5a1 1 0 0 1 1 1v1.05a1 1 0 1 1-2 0V5.5a1 1 0 0 1 1-1Zm0 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm7.5-2.5a1 1 0 0 1-1 1h-1.05a1 1 0 1 1 0-2H18.5a1 1 0 0 1 1 1Zm-6.5 8a1 1 0 0 1-1-1v-1.05a1 1 0 1 1 2 0V17a1 1 0 0 1-1 1Zm-6.5-8a1 1 0 0 1-1 1H4.45a1 1 0 1 1 0-2H5.5a1 1 0 0 1 1 1Zm9.9-4.95 1.05-1.05a1 1 0 1 1 1.4 1.42l-1.04 1.03a1 1 0 1 1-1.41-1.4Zm2.45 10.9a1 1 0 0 1-1.4 1.41l-1.05-1.05a1 1 0 0 1 1.41-1.4l1.04 1.04ZM6.05 7.37a1 1 0 1 1-1.4-1.41l1.04-1.04a1 1 0 0 1 1.41 1.4L6.05 7.37Zm0 9.26 1.05-1.05a1 1 0 0 1 1.41 1.41l-1.04 1.04a1 1 0 1 1-1.42-1.4Z"
+            />
+          </svg>
+          <svg class="icon-svg moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 7.5 7.5 0 1 0 20 14.5Z" />
+          </svg>
+        </button>
+        <button class="primary ghost" id="quick-settings">
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm9 3.75a7.8 7.8 0 0 0-.06-.98l1.53-1.2a.5.5 0 0 0 .12-.63l-1.45-2.5a.5.5 0 0 0-.6-.22l-1.8.73a7.8 7.8 0 0 0-1.7-.98l-.27-1.9a.5.5 0 0 0-.5-.42h-2.9a.5.5 0 0 0-.5.42l-.27 1.9c-.6.23-1.17.54-1.7.9l-1.8-.76a.5.5 0 0 0-.6.22l-1.45 2.5a.5.5 0 0 0 .12.63l1.53 1.2a7.8 7.8 0 0 0 0 1.96l-1.53 1.2a.5.5 0 0 0-.12.63l1.45 2.5a.5.5 0 0 0 .6.22l1.8-.76c.53.36 1.1.67 1.7.9l.27 1.9a.5.5 0 0 0 .5.42h2.9a.5.5 0 0 0 .5-.42l.27-1.9c.6-.23 1.17-.54 1.7-.9l1.8.76a.5.5 0 0 0 .6-.22l1.45-2.5a.5.5 0 0 0-.12-.63l-1.53-1.2c.04-.32.06-.65.06-.98Z"
+            />
+          </svg>
+          Settings
+        </button>
+      </div>
+    </header>
+
+    <nav class="pill-nav" role="tablist">
+      <a class="pill" href="./index.html">Overview</a>
+      <a class="pill" href="./pulse.html">Pulse</a>
+      <a class="pill" href="./subdomains.html">Subdomains</a>
+      <a class="pill" href="./shop.html">Shop</a>
+      <a class="pill active" href="./map.html">Map</a>
+      <a class="pill" href="./notes.html">Notizen</a>
+    </nav>
+
+    <main class="layout">
+      <section class="card classic slide-in">
+        <p class="eyebrow">Karte</p>
+        <h3>Google Maps</h3>
+        <p class="muted">Finde Standorte oder plane Routen direkt eingebettet.</p>
+        <div class="map-frame">
+          <iframe
+            title="Google Maps Wittenberge"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2407.410661893091!2d11.7405!3d52.9967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ac1d7a2cc1c5f9%3A0x6f5e60ef749acd7c!2sWittenberge!5e0!3m2!1sde!2sde!4v1700000000000!5m2!1sde!2sde"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>With ❤️ from Wittenberge</p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

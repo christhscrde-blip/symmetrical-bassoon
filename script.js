@@ -88,6 +88,9 @@ const wireThemeToggle = (prefs) => {
       toggles.forEach((t) => {
         if (t && t.type === 'checkbox') t.checked = prefs.theme === 'dark';
       });
+      if (toggle.tagName === 'BUTTON') {
+        toggle.setAttribute('aria-pressed', prefs.theme === 'dark');
+      }
     };
     toggle.addEventListener(toggle.type === 'checkbox' ? 'change' : 'click', handler);
   });
