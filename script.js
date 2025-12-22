@@ -184,7 +184,10 @@ const liveStats = () => {
   const applyLatencyMeasurement = (ms) => {
     if (state.statsFrozen) return;
     state.latencyMs = ms;
-    const throughputCalc = Math.min(2000, Math.max(200, Math.round(60000 / Math.max(ms, 20)))));
+    const throughputCalc = Math.min(
+      2000,
+      Math.max(200, Math.round(60000 / Math.max(ms, 20)))
+    );
     sliders.latency.value = Math.min(180, Math.max(20, Math.round(ms)));
     sliders.throughput.value = throughputCalc;
     sliders.queue.value = Math.max(0, Math.min(50, Math.round(60 - throughputCalc / 40)));
@@ -312,7 +315,8 @@ const renderSubdomains = () => {
     });
     list.appendChild(item);
   });
-  document.getElementById('active-label')?.textContent = `${state.subdomains.length} aktiv`;
+  const activeLabel = document.getElementById('active-label');
+  if (activeLabel) activeLabel.textContent = `${state.subdomains.length} aktiv`;
 };
 
 const handleSubdomainAction = (action, name) => {
